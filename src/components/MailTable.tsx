@@ -14,23 +14,25 @@ export default function MailTable({ setMail, selectedMail }: { setMail: (mail: M
         return <div>No mails</div>
     }
 
+    const reversedMessages = [...data.messages].reverse()
+
     return (
-        <table className="min-w-full text-left text-sm font-light">
+        <table className="max-w-full text-left text-sm font-light overflow-x-scroll">
             <thead className="border-b font-medium dark:border-neutral-500">
             <tr>
-                <th scope="col" className="px-6 py-4">Subject</th>
-                <th scope="col" className="px-6 py-4">From</th>
-                <th scope="col" className="px-6 py-4">To</th>
-                <th scope="col" className="px-6 py-4">Time</th>
+                <th scope="col" className="p-2">Time</th>
+                <th scope="col" className="p-2">Subject</th>
+                <th scope="col" className="p-2">To</th>
+                <th scope="col" className="p-2">From</th>
             </tr>
             </thead>
             <tbody>
-            {data.messages.map((message) => (
+            {reversedMessages.map((message) => (
                 <tr className={`border-b dark:border-neutral-500 ${message.Id === selectedMail?.Id ? 'bg-white' : ''}`} key={message.Id} onClick={() => setMail(message)}>
-                    <td className="whitespace-nowrap px-6 py-4 font-medium">{message.Subject}</td>
-                    <td className="whitespace-nowrap px-6 py-4">{message.Source}</td>
-                    <td className="whitespace-nowrap px-6 py-4">{message.Destination.ToAddresses.map((to) => <li key={to}>{to}</li>)}</td>
-                    <td className="whitespace-nowrap px-6 py-4">{message.Timestamp}</td>
+                    <td className="whitespace-nowrap p-2">{message.Timestamp}</td>
+                    <td className="whitespace-nowrap p-2">{message.Subject}</td>
+                    <td className="whitespace-nowrap p-2">{message.Destination.ToAddresses.map((to) => <li key={to}>{to}</li>)}</td>
+                    <td className="whitespace-nowrap p-2">{message.Source}</td>
                 </tr>
             ))}
             </tbody>
